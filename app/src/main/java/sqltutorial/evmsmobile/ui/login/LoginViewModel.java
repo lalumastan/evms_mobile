@@ -1,19 +1,19 @@
 package sqltutorial.evmsmobile.ui.login;
 
-import static sqltutorial.evmsmobile.data.api.RestApiCall.AUTHORIZATION;
+import android.util.Base64;
+import android.util.Patterns;
+
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERNAME;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_AUTHORIZATION;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import android.util.Patterns;
-
-import android.util.Base64;
-
+import sqltutorial.evmsmobile.R;
 import sqltutorial.evmsmobile.data.api.AsyncDataConnectTask;
 import sqltutorial.evmsmobile.data.api.RestApiCall;
 import sqltutorial.evmsmobile.data.model.LoggedInUser;
-import sqltutorial.evmsmobile.R;
 
 public class LoginViewModel extends ViewModel {
 
@@ -30,14 +30,15 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        AUTHORIZATION =  Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
+        CURRENT_LOGGEDIN_USERNAME = username;
+        CURRENT_LOGGEDIN_AUTHORIZATION = Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
         RestApiCall restApiCall = new RestApiCall("login", "POST");
         AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
     }
 
-    public void setResult(String email, String displayName) {
-        if (displayName != null) {
-            loginResult.setValue(new LoginResult(new LoggedInUserView(email, displayName)));
+    public void setResult(String role) {
+        if (role != null && !role.isEmpty()) {
+            loginResult.setValue(new LoginResult(new LoggedInUser(CURRENT_LOGGEDIN_USERNAME, CURRENT_LOGGEDIN_AUTHORIZATION, role)));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }

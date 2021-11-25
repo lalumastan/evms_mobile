@@ -7,10 +7,17 @@ public class LoggedInUser {
 
     String username;
     String password;
+    String role;
 
     public LoggedInUser(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public LoggedInUser(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public String getUsername() {
@@ -29,11 +36,20 @@ public class LoggedInUser {
         this.password = password;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "LoggedInUser{" +
-                ", username='" + username + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

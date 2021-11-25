@@ -1,53 +1,71 @@
 package sqltutorial.evmsmobile.ui.login;
 
-import android.app.Activity;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import static sqltutorial.evmsmobile.MainActivity.actionBar;
+import static sqltutorial.evmsmobile.MainActivity.hideKeyboard;
 
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import sqltutorial.evmsmobile.R;
-import sqltutorial.evmsmobile.ui.login.LoginViewModel;
-import sqltutorial.evmsmobile.ui.login.LoginViewModelFactory;
-import sqltutorial.evmsmobile.databinding.ActivityLoginBinding;
+import sqltutorial.evmsmobile.data.model.LoggedInUser;
+import sqltutorial.evmsmobile.databinding.FragmentLoginBinding;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginFragment extends Fragment {
+    public static String CURRENT_LOGGEDIN_USERNAME = null;
+    public static String CURRENT_LOGGEDIN_USERROLE = null;
+    public static String CURRENT_LOGGEDIN_AUTHORIZATION = null;
 
     private LoginViewModel loginViewModel;
-    private ActivityLoginBinding binding;
+    private FragmentLoginBinding binding;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+
+        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory()).get(LoginViewModel.class);
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
         final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        loginViewModel.getLoginFormState().observe(getViewLifecycleOwner(), new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
                 if (loginFormState == null) {
@@ -63,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
+        loginViewModel.getLoginResult().observe(getViewLifecycleOwner(), new Observer<LoginResult>() {
             @Override
             public void onChanged(@Nullable LoginResult loginResult) {
                 if (loginResult == null) {
@@ -71,15 +89,16 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
+                    showLoginFailed(view, loginResult.getError());
                 }
                 if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
+                    updateUiWithUser(view, loginResult.getSuccess());
                 }
-                setResult(Activity.RESULT_OK);
+
+                //setResult(Activity.RESULT_OK);
 
                 //Complete and destroy login activity once successful
-                finish();
+                //finish();
             }
         });
 
@@ -118,19 +137,33 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
+                hideKeyboard(getActivity(), v);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.clear();
     }
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    private void updateUiWithUser(View view, LoggedInUser model) {
+        String welcome = getString(R.string.welcome) +  " " + model.getUsername();
+        Snackbar.make(view, welcome, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        CURRENT_LOGGEDIN_USERROLE = model.getRole();
+        NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_nav_login_to_nav_home);
+    }
+
+    private void showLoginFailed(View view, @StringRes Integer errorString) {
+        Snackbar.make(view, errorString, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

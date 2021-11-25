@@ -1,5 +1,7 @@
 package sqltutorial.evmsmobile.data.api;
 
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_AUTHORIZATION;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,8 +16,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class RestApiCall {
 
     private final static String BASE_API_URL = "https://evmsa.herokuapp.com/api/evms/";
-
-    public static String AUTHORIZATION = null;
 
     String urlString;
     String type;
@@ -41,8 +41,8 @@ public class RestApiCall {
             boolean isPostOrPut = "POST".equals(type) || "PUT".equals(type);
             URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            if (AUTHORIZATION != null) {
-               connection.setRequestProperty("Authorization", "Basic " + AUTHORIZATION);
+            if (CURRENT_LOGGEDIN_AUTHORIZATION != null) {
+                connection.setRequestProperty("Authorization", "Basic " + CURRENT_LOGGEDIN_AUTHORIZATION);
             }
             connection.addRequestProperty("Accept-Encoding", "gzip");
             connection.setRequestMethod(type);

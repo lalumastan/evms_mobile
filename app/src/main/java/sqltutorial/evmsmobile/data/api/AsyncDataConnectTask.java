@@ -5,20 +5,6 @@ import android.os.AsyncTask;
 import androidx.lifecycle.ViewModel;
 
 import sqltutorial.evmsmobile.ui.login.LoginViewModel;
-/*
-import sqltutorial.evmsmobile.ui.add.AddNoteViewModel;
-import sqltutorial.evmsmobile.ui.dialog.SharedNoteViewModel;
-import sqltutorial.evmsmobile.ui.home.DisplayNoteViewModel;
-import sqltutorial.evmsmobile.ui.registration.RegistrationViewModel;
-
- */
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USER_EMAIL;
 
@@ -43,20 +29,9 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
 
         if (viewModel instanceof LoginViewModel) {
             LoginViewModel loginViewModel = (LoginViewModel) viewModel;
-            String email = null;
-            String displayName = null;
-            try {
-                //JSONObject jo = new JSONObject(s);
-                email = s;
-                displayName = s;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            loginViewModel.setResult(email, displayName);
+            loginViewModel.setResult(s);
         }
-
+        
         /*
         else if (viewModel instanceof RegistrationViewModel) {
             System.out.println(s);

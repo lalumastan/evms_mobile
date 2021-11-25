@@ -2,12 +2,14 @@ package sqltutorial.evmsmobile.ui.login;
 
 import androidx.annotation.Nullable;
 
+import sqltutorial.evmsmobile.data.model.LoggedInUser;
+
 /**
  * Authentication result : success (user details) or error message.
  */
 class LoginResult {
     @Nullable
-    private LoggedInUserView success;
+    private LoggedInUser success;
     @Nullable
     private Integer error;
 
@@ -15,12 +17,12 @@ class LoginResult {
         this.error = error;
     }
 
-    LoginResult(@Nullable LoggedInUserView success) {
+    LoginResult(@Nullable LoggedInUser success) {
         this.success = success;
     }
 
     @Nullable
-    LoggedInUserView getSuccess() {
+    LoggedInUser getSuccess() {
         return success;
     }
 
