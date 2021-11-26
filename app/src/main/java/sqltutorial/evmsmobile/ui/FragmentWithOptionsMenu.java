@@ -6,6 +6,7 @@ import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USE
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,12 @@ public class FragmentWithOptionsMenu extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.action_delete).setVisible(false);
     }
 
     @Override

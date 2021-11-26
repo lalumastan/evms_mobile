@@ -4,7 +4,14 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.ViewModel;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import sqltutorial.evmsmobile.data.model.VaccineType;
 import sqltutorial.evmsmobile.ui.login.LoginViewModel;
+import sqltutorial.evmsmobile.ui.vaccine_types.VaccineTypesViewModel;
 
 //import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USER_EMAIL;
 
@@ -31,7 +38,24 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
             LoginViewModel loginViewModel = (LoginViewModel) viewModel;
             loginViewModel.setResult(s);
         }
-        
+        else if (viewModel instanceof VaccineTypesViewModel) {
+            System.out.println(s);
+            VaccineTypesViewModel displayVaccineTypeViewModel = (VaccineTypesViewModel) viewModel;
+            ArrayList<VaccineType> vaccineTypeList = new ArrayList<VaccineType>();
+            try {
+                JSONArray ja = new JSONArray(s);
+                for (int i = 0; i < ja.length(); i++) {
+                    JSONObject jo = ja.getJSONObject(i);
+                    VaccineType note = new VaccineType(jo.getString("name"), jo.getString("description"));
+                    vaccineTypeList.add(note);
+                }
+                System.out.println(vaccineTypeList);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            displayVaccineTypeViewModel.setVaccineTypeList(vaccineTypeList);
+        }
         /*
         else if (viewModel instanceof RegistrationViewModel) {
             System.out.println(s);
@@ -64,35 +88,6 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
                 System.out.println(e.getMessage());
                 sharedNoteViewModel.setSharedNoteResult(s);
             }
-        } else if (viewModel instanceof DisplayNoteViewModel) {
-            System.out.println(s);
-            DisplayNoteViewModel displayNoteViewModel = (DisplayNoteViewModel) viewModel;
-            ArrayList<Note> noteList = new ArrayList<Note>();
-            try {
-                JSONArray ja = new JSONArray(s);
-                for (int i = 0; i < ja.length(); i++) {
-                    JSONObject jo = ja.getJSONObject(i);
-                    Note note = new Note(jo.getInt("id"), jo.getString("title"), jo.getString("type"), jo.getString("description"), jo.getString("createdBy"), jo.getString("lastUpdatedBy"));
-                    JSONArray jan = jo.getJSONArray("noteUsers");
-                    if (jan != null && jan.length() > 0) {
-                        ArrayList<NoteUser> noteUserList = new ArrayList<>();
-                        for (int j = 0; j < jan.length(); j++) {
-                            JSONObject jou = jan.getJSONObject(j);
-                            JSONObject joui = jou.getJSONObject("noteUserId");
-                            String sharedEmail = joui.getString("email");
-                            noteUserList.add(new NoteUser(new NoteUserId(joui.getInt("noteId"), sharedEmail)));
-                            if (CURRENT_LOGGEDIN_USER_EMAIL.equals(sharedEmail)) {
-                                noteList.add(note);
-                            }
-                        }
-                    }
-                }
-                System.out.println(noteList);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            displayNoteViewModel.setNoteList(noteList);
         }
         */
     }
