@@ -5,6 +5,8 @@ package sqltutorial.evmsmobile.data.model;
  */
 public class LoggedInUser {
 
+    public final static String ADMIN = "ROLE_ADMIN";
+
     String username;
     String password;
     String role;

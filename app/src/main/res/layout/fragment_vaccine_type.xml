@@ -15,7 +15,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        app:cardBackgroundColor="#E6E3E3"
+        app:cardBackgroundColor="@color/teal_700"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
 
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|top"
                 android:lines="2"
-                android:textColor="#000000" />
+                android:textColor="#FFFFFF" />
 
             <TextView
                 android:id="@+id/vaccine_type_description"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|top"
                 android:maxLines="12"
-                android:textColor="#000000" />
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

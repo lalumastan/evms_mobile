@@ -1,5 +1,7 @@
 package sqltutorial.evmsmobile.ui.vaccine_types.list;
 
+import static sqltutorial.evmsmobile.data.model.LoggedInUser.ADMIN;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERROLE;
 import static sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListFragment.CURRENT_VACCINE_TYPE;
 
 import android.view.LayoutInflater;
@@ -61,10 +63,13 @@ public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             String title = vaccineType.getName(), description = vaccineType.getDescription();
             vaccineTypeNameTextView.setText(fixNull(title));
             vaccineTypeDescriptionTextView.setText(fixNull(description));
-            cardView.setOnClickListener(e -> {
-                CURRENT_VACCINE_TYPE = vaccineType;
-                Navigation.findNavController(cardView).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);
-            });
+
+            if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
+                cardView.setOnClickListener(e -> {
+                    CURRENT_VACCINE_TYPE = vaccineType;
+                    Navigation.findNavController(cardView).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);
+                });
+            }
         }
 
     }

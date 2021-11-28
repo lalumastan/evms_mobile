@@ -1,5 +1,8 @@
 package sqltutorial.evmsmobile.ui.vaccine_types.list;
 
+import static sqltutorial.evmsmobile.data.model.LoggedInUser.ADMIN;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERROLE;
+
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -43,13 +46,16 @@ public class VaccineTypeListFragment extends FragmentWithOptionsMenu {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CURRENT_VACCINE_TYPE = null;
-                Navigation.findNavController(view).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);
-            }
-        });
+        if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
+            binding.fab.setVisibility(View.VISIBLE);
+            binding.fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    CURRENT_VACCINE_TYPE = null;
+                    Navigation.findNavController(view).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);
+                }
+            });
+        }
 
         mViewModel = new ViewModelProvider(this, new VaccineTypeListViewModelFactory()).get(VaccineTypeListViewModel.class);
         mViewModel.fetchAllVaccineTypeLists();

@@ -1,6 +1,8 @@
 package sqltutorial.evmsmobile.ui.vaccine_types.maintain;
 
 import static sqltutorial.evmsmobile.MainActivity.hideKeyboard;
+import static sqltutorial.evmsmobile.data.model.LoggedInUser.ADMIN;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERROLE;
 import static sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListFragment.CURRENT_VACCINE_TYPE;
 
 import android.content.DialogInterface;
@@ -57,8 +59,11 @@ public class MaintainVaccineTypeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        deleteMenuItem = menu.findItem(R.id.action_delete);
-        deleteMenuItem.setVisible(isEdit);
+
+        if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
+            deleteMenuItem = menu.findItem(R.id.action_delete);
+            deleteMenuItem.setVisible(isEdit);
+        }
     }
 
     @Override
