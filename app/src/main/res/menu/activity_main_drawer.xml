@@ -9,7 +9,7 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_vaccine_types"
+            android:id="@+id/nav_vaccine_type_list"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_vaccine_types" />
     </group>

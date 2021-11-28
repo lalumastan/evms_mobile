@@ -152,7 +152,7 @@ public class LoginFragment extends Fragment {
 
     private void updateUiWithUser(View view, LoggedInUser model) {
         String welcome = getString(R.string.welcome) +  " " + model.getUsername();
-        Snackbar.make(view, welcome, Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        //Snackbar.make(view, welcome, Snackbar.LENGTH_LONG).setAction("Action", null).show();
         CURRENT_LOGGEDIN_USERROLE = model.getRole();
         NavHostFragment.findNavController(LoginFragment.this).navigate(R.id.action_nav_login_to_nav_home);
     }

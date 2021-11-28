@@ -18,4 +18,15 @@
     <string name="menu_home">Home</string>
     <string name="menu_vaccine_types">Vaccine Types</string>
     <string name="action_delete">Delete</string>
+
+    <string name="delete_confirmation">Delete this vaccine type?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="prompt_note_name">Name</string>
+    <string name="action_add">Add</string>
+    <string name="prompt_note_description">Description</string>
+    <string name="update">Update</string>
+
+    <string name="invalid_vaccine_type_name">Vaccine Type name cannot be empty.</string>
+    <string name="invalid_vaccine_type_description">Vaccine Type description cannot be empty.</string>
 </resources>

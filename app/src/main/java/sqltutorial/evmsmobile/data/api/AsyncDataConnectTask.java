@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 import sqltutorial.evmsmobile.data.model.VaccineType;
 import sqltutorial.evmsmobile.ui.login.LoginViewModel;
-import sqltutorial.evmsmobile.ui.vaccine_types.VaccineTypesViewModel;
+
+import sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListViewModel;
 
 //import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USER_EMAIL;
 
@@ -38,9 +39,9 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
             LoginViewModel loginViewModel = (LoginViewModel) viewModel;
             loginViewModel.setResult(s);
         }
-        else if (viewModel instanceof VaccineTypesViewModel) {
+        else if (viewModel instanceof VaccineTypeListViewModel) {
             System.out.println(s);
-            VaccineTypesViewModel displayVaccineTypeViewModel = (VaccineTypesViewModel) viewModel;
+            VaccineTypeListViewModel displayVaccineTypeViewModel = (VaccineTypeListViewModel) viewModel;
             ArrayList<VaccineType> vaccineTypeList = new ArrayList<VaccineType>();
             try {
                 JSONArray ja = new JSONArray(s);

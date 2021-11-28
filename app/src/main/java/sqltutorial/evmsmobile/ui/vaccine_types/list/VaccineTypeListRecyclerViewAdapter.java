@@ -1,34 +1,33 @@
-package sqltutorial.evmsmobile.ui.vaccine_types;
+package sqltutorial.evmsmobile.ui.vaccine_types.list;
 
-import static sqltutorial.evmsmobile.ui.vaccine_types.VaccineTypesFragment.CURRENT_VACCINE_TYPE;
+import static sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListFragment.CURRENT_VACCINE_TYPE;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 import sqltutorial.evmsmobile.R;
 import sqltutorial.evmsmobile.data.model.VaccineType;
+import sqltutorial.evmsmobile.databinding.FragmentVaccineTypeBinding;
 
-public class VaccineTypeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final ArrayList<VaccineType> vaccineTypeList;
 
-    public VaccineTypeRecyclerViewAdapter(ArrayList<VaccineType> vaccineTypeList) {
+    public VaccineTypeListRecyclerViewAdapter(ArrayList<VaccineType> vaccineTypeList) {
         this.vaccineTypeList = vaccineTypeList;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.vaccine_type, parent, false);
-        VaccineTypeViewHolder vaccineTypeViewHolder = new VaccineTypeViewHolder(v);
-        return vaccineTypeViewHolder;
+        return new VaccineTypeListRecyclerViewAdapter.VaccineTypeViewHolder(FragmentVaccineTypeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -46,12 +45,12 @@ public class VaccineTypeRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
         CardView cardView;
         TextView vaccineTypeNameTextView, vaccineTypeDescriptionTextView;
 
-        public VaccineTypeViewHolder(View vaccineTypeView) {
-            super(vaccineTypeView);
+        public VaccineTypeViewHolder(FragmentVaccineTypeBinding binding) {
+            super(binding.getRoot());
 
-            cardView = vaccineTypeView.findViewById(R.id.vaccine_type_card_layout);
-            vaccineTypeNameTextView = vaccineTypeView.findViewById(R.id.vaccine_type_name);
-            vaccineTypeDescriptionTextView = vaccineTypeView.findViewById(R.id.vaccine_type_description);
+            cardView = binding.vaccineTypeCardLayout;
+            vaccineTypeNameTextView = binding.vaccineTypeName;
+            vaccineTypeDescriptionTextView = binding.vaccineTypeDescription;
         }
 
         private String fixNull(String str) {
@@ -64,7 +63,7 @@ public class VaccineTypeRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
             vaccineTypeDescriptionTextView.setText(fixNull(description));
             cardView.setOnClickListener(e -> {
                 CURRENT_VACCINE_TYPE = vaccineType;
-                //Navigation.findNavController(cardView).navigate(R.id.action_home_fragment_to_add_vaccine_type_fragment);
+                Navigation.findNavController(cardView).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);
             });
         }
 

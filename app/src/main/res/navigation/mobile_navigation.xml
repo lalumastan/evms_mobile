@@ -22,8 +22,21 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_vaccine_types"
-        android:name="sqltutorial.evmsmobile.ui.vaccine_types.VaccineTypesFragment"
+        android:id="@+id/nav_vaccine_type_list"
+        android:name="sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListFragment"
         android:label="@string/menu_vaccine_types"
-        tools:layout="@layout/fragment_vaccine_types" />
+        tools:layout="@layout/fragment_vaccine_type_list" >
+        <action
+            android:id="@+id/action_nav_vaccine_type_list_to_nav_maintain_vaccine_type"
+            app:destination="@id/nav_maintain_vaccine_type" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_maintain_vaccine_type"
+        android:name="sqltutorial.evmsmobile.ui.vaccine_types.maintain.MaintainVaccineTypeFragment"
+        android:label="@string/action_add"
+        tools:layout="@layout/fragment_maintain_vaccine_type" >
+        <action
+            android:id="@+id/action_nav_maintain_vaccine_type_to_nav_vaccine_type_list"
+            app:destination="@id/nav_vaccine_type_list" />
+    </fragment>
 </navigation>

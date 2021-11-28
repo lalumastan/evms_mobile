@@ -61,7 +61,7 @@ public class RestApiCall {
                 out.flush();
                 out.close();
                 int statusCode = connection.getResponseCode();
-                if (statusCode != HttpURLConnection.HTTP_OK) {
+                if (statusCode != HttpURLConnection.HTTP_OK && statusCode != HttpURLConnection.HTTP_CREATED) {
                     throw new Exception("Unexpected status from post: " + statusCode);
                 }
             }

@@ -1,4 +1,4 @@
-package sqltutorial.evmsmobile.ui.vaccine_types;
+package sqltutorial.evmsmobile.ui.vaccine_types.list;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -9,10 +9,10 @@ import sqltutorial.evmsmobile.data.api.AsyncDataConnectTask;
 import sqltutorial.evmsmobile.data.api.RestApiCall;
 import sqltutorial.evmsmobile.data.model.VaccineType;
 
-public class VaccineTypesViewModel extends ViewModel {
+public class VaccineTypeListViewModel extends ViewModel {
     private MutableLiveData<ArrayList<VaccineType>> mVaccineTypesList;
 
-    public VaccineTypesViewModel() {
+    public VaccineTypeListViewModel() {
         mVaccineTypesList = new MutableLiveData<>();
     }
 
