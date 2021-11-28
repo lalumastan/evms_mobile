@@ -14,8 +14,6 @@ import sqltutorial.evmsmobile.ui.login.LoginViewModel;
 
 import sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListViewModel;
 
-//import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USER_EMAIL;
-
 // Data will be passed as a string
 public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String> {
 
@@ -57,39 +55,5 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
             }
             displayVaccineTypeViewModel.setVaccineTypeList(vaccineTypeList);
         }
-        /*
-        else if (viewModel instanceof RegistrationViewModel) {
-            System.out.println(s);
-            RegistrationViewModel registrationViewModel = (RegistrationViewModel) viewModel;
-            registrationViewModel.setSignupResult(s);
-        } else if (viewModel instanceof AddNoteViewModel) {
-            AddNoteViewModel addNoteViewModel = (AddNoteViewModel) viewModel;
-            Note note = null;
-            try {
-                JSONObject jo = new JSONObject(s);
-                note = new Note(jo.getInt("id"), jo.getString("title"), jo.getString("type"), jo.getString("description"), jo.getString("createdBy"), jo.getString("lastUpdatedBy"));
-                System.out.println(note);
-                addNoteViewModel.setAddNoteResult(note);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else if (viewModel instanceof SharedNoteViewModel) {
-            System.out.println(s);
-            SharedNoteViewModel sharedNoteViewModel = (SharedNoteViewModel) viewModel;
-
-            try {
-                JSONArray ja = new JSONArray(s);
-                List<String> emailList = new ArrayList<>();
-                for (int i = 0; i < ja.length(); i++) {
-                    emailList.add(ja.getString(i));
-                }
-                System.out.println(emailList);
-                sharedNoteViewModel.setSharedEmailNoteResult(emailList);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                sharedNoteViewModel.setSharedNoteResult(s);
-            }
-        }
-        */
     }
 }

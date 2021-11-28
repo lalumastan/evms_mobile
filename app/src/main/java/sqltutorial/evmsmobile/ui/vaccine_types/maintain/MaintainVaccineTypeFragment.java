@@ -33,9 +33,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import sqltutorial.evmsmobile.R;
 import sqltutorial.evmsmobile.data.model.VaccineType;
+import sqltutorial.evmsmobile.ui.FragmentWithOptionsMenu;
 import sqltutorial.evmsmobile.ui.login.LoginFragment;
 
-public class MaintainVaccineTypeFragment extends Fragment {
+public class MaintainVaccineTypeFragment extends FragmentWithOptionsMenu {
 
     private MaintainVaccineTypeViewModel mViewModel;
 
@@ -46,24 +47,23 @@ public class MaintainVaccineTypeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setHasOptionsMenu(true);
         isEdit = CURRENT_VACCINE_TYPE != null;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
+            deleteMenuItem = menu.findItem(R.id.action_delete);
+            deleteMenuItem.setVisible(isEdit);
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_maintain_vaccine_type, container, false);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-
-        if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
-            deleteMenuItem = menu.findItem(R.id.action_delete);
-            deleteMenuItem.setVisible(isEdit);
-        }
     }
 
     @Override
