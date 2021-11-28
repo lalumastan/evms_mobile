@@ -1,10 +1,10 @@
 package sqltutorial.evmsmobile.ui.login;
 
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_AUTHORIZATION;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_USERNAME;
+
 import android.util.Base64;
 import android.util.Patterns;
-
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERNAME;
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_AUTHORIZATION;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -17,8 +17,8 @@ import sqltutorial.evmsmobile.data.model.LoggedInUser;
 
 public class LoginViewModel extends ViewModel {
 
-    private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
-    private MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
+    private final MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
+    private final MutableLiveData<LoginResult> loginResult = new MutableLiveData<>();
 
     LiveData<LoginFormState> getLoginFormState() {
         return loginFormState;
@@ -30,15 +30,15 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        CURRENT_LOGGEDIN_USERNAME = username;
-        CURRENT_LOGGEDIN_AUTHORIZATION = Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
+        CURRENT_LOGIN_USERNAME = username;
+        CURRENT_LOGIN_AUTHORIZATION = Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
         RestApiCall restApiCall = new RestApiCall("login", "POST");
-        AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
+        new AsyncDataConnectTask(this).execute(restApiCall);
     }
 
     public void setResult(String role) {
         if (role != null && !role.isEmpty()) {
-            loginResult.setValue(new LoginResult(new LoggedInUser(CURRENT_LOGGEDIN_USERNAME, CURRENT_LOGGEDIN_AUTHORIZATION, role)));
+            loginResult.setValue(new LoginResult(new LoggedInUser(CURRENT_LOGIN_USERNAME, CURRENT_LOGIN_AUTHORIZATION, role)));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }

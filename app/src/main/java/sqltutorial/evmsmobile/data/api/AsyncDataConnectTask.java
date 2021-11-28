@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import sqltutorial.evmsmobile.data.model.VaccineType;
 import sqltutorial.evmsmobile.ui.login.LoginViewModel;
-
 import sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListViewModel;
 
 // Data will be passed as a string
@@ -40,7 +39,7 @@ public class AsyncDataConnectTask extends AsyncTask<RestApiCall, Integer, String
         else if (viewModel instanceof VaccineTypeListViewModel) {
             System.out.println(s);
             VaccineTypeListViewModel displayVaccineTypeViewModel = (VaccineTypeListViewModel) viewModel;
-            ArrayList<VaccineType> vaccineTypeList = new ArrayList<VaccineType>();
+            ArrayList<VaccineType> vaccineTypeList = new ArrayList<>();
             try {
                 JSONArray ja = new JSONArray(s);
                 for (int i = 0; i < ja.length(); i++) {

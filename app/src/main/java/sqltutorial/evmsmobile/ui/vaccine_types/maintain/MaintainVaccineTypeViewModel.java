@@ -6,12 +6,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.Gson;
+
 import sqltutorial.evmsmobile.R;
 import sqltutorial.evmsmobile.data.api.AsyncDataConnectTask;
 import sqltutorial.evmsmobile.data.api.RestApiCall;
 import sqltutorial.evmsmobile.data.model.VaccineType;
-
-import com.google.gson.Gson;
 
 public class MaintainVaccineTypeViewModel extends ViewModel {
     
@@ -24,10 +24,6 @@ public class MaintainVaccineTypeViewModel extends ViewModel {
 
     public MutableLiveData<VaccineType> getAddVaccineTypeResult() {
         return addVaccineTypeResult;
-    }
-
-    public void setAddVaccineTypeResult(VaccineType vaccineType) {
-        addVaccineTypeResult.setValue(vaccineType);
     }
 
     public void addVaccineTypeDataChanged(String name, String description) {
@@ -45,7 +41,7 @@ public class MaintainVaccineTypeViewModel extends ViewModel {
         Gson gson = new Gson();
         String json = gson.toJson(vaccineType);
         RestApiCall restApiCall = new RestApiCall("vaccine_types/add", "POST", json);
-        AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
+        new AsyncDataConnectTask(this).execute(restApiCall);
     }
 
     public void editVaccineType(String name, String description) {
@@ -54,11 +50,11 @@ public class MaintainVaccineTypeViewModel extends ViewModel {
         Gson gson = new Gson();
         String json = gson.toJson(CURRENT_VACCINE_TYPE);
         RestApiCall restApiCall = new RestApiCall("vaccine_types/edit", "PUT", json);
-        AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
+        new AsyncDataConnectTask(this).execute(restApiCall);
     }
 
     public void deleteVaccineType(String name) {
         RestApiCall restApiCall = new RestApiCall("vaccine_types/delete/" + name, "DELETE");
-        AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
+        new AsyncDataConnectTask(this).execute(restApiCall);
     }
 }

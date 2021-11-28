@@ -1,6 +1,6 @@
 package sqltutorial.evmsmobile.data.api;
 
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_AUTHORIZATION;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_AUTHORIZATION;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -41,8 +41,8 @@ public class RestApiCall {
             boolean isPostOrPut = "POST".equals(type) || "PUT".equals(type);
             URL url = new URL(urlString);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
-            if (CURRENT_LOGGEDIN_AUTHORIZATION != null) {
-                connection.setRequestProperty("Authorization", "Basic " + CURRENT_LOGGEDIN_AUTHORIZATION);
+            if (CURRENT_LOGIN_AUTHORIZATION != null) {
+                connection.setRequestProperty("Authorization", "Basic " + CURRENT_LOGIN_AUTHORIZATION);
             }
             connection.addRequestProperty("Accept-Encoding", "gzip");
             connection.setRequestMethod(type);

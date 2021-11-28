@@ -2,41 +2,39 @@ package sqltutorial.evmsmobile;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.navigation.NavigationView;
 
 import sqltutorial.evmsmobile.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     public static ActionBar actionBar;
-    private DrawerLayout drawer;
 
     private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        sqltutorial.evmsmobile.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
         actionBar = getSupportActionBar();
-        drawer = binding.drawerLayout;
+        DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

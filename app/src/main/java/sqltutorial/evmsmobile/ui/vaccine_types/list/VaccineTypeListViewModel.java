@@ -10,7 +10,7 @@ import sqltutorial.evmsmobile.data.api.RestApiCall;
 import sqltutorial.evmsmobile.data.model.VaccineType;
 
 public class VaccineTypeListViewModel extends ViewModel {
-    private MutableLiveData<ArrayList<VaccineType>> mVaccineTypesList;
+    private final MutableLiveData<ArrayList<VaccineType>> mVaccineTypesList;
 
     public VaccineTypeListViewModel() {
         mVaccineTypesList = new MutableLiveData<>();
@@ -26,6 +26,6 @@ public class VaccineTypeListViewModel extends ViewModel {
 
     public void fetchAllVaccineTypeLists() {
         RestApiCall restApiCall = new RestApiCall("vaccine_types", "GET");
-        AsyncDataConnectTask task = (AsyncDataConnectTask) new AsyncDataConnectTask(this).execute(restApiCall);
+        new AsyncDataConnectTask(this).execute(restApiCall);
     }
 }

@@ -1,5 +1,7 @@
 package sqltutorial.evmsmobile.data.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository
  */
@@ -11,11 +13,6 @@ public class LoggedInUser {
     String password;
     String role;
 
-    public LoggedInUser(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public LoggedInUser(String username, String password, String role) {
         this.username = username;
         this.password = password;
@@ -26,26 +23,11 @@ public class LoggedInUser {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
+    @NonNull
     @Override
     public String toString() {
         return "LoggedInUser{" +

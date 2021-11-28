@@ -1,8 +1,8 @@
 package sqltutorial.evmsmobile.ui;
 
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_AUTHORIZATION;
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERNAME;
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERROLE;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_AUTHORIZATION;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_USERNAME;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_USERROLE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -33,14 +33,15 @@ public class FragmentWithOptionsMenu extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_signout) {
-            CURRENT_LOGGEDIN_USERNAME = null;
-            CURRENT_LOGGEDIN_USERROLE = null;
-            CURRENT_LOGGEDIN_AUTHORIZATION = null;
+            CURRENT_LOGIN_USERNAME = null;
+            CURRENT_LOGIN_USERROLE = null;
+            CURRENT_LOGIN_AUTHORIZATION = null;
 
             MainActivity mainActivity = (MainActivity) this.getActivity();
             Intent intent = new Intent(mainActivity, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+            assert mainActivity != null;
             mainActivity.finish();
 
             return true;

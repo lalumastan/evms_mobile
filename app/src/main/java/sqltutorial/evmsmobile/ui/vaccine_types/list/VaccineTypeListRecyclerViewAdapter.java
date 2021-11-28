@@ -1,7 +1,7 @@
 package sqltutorial.evmsmobile.ui.vaccine_types.list;
 
 import static sqltutorial.evmsmobile.data.model.LoggedInUser.ADMIN;
-import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGGEDIN_USERROLE;
+import static sqltutorial.evmsmobile.ui.login.LoginFragment.CURRENT_LOGIN_USERROLE;
 import static sqltutorial.evmsmobile.ui.vaccine_types.list.VaccineTypeListFragment.CURRENT_VACCINE_TYPE;
 
 import android.view.LayoutInflater;
@@ -29,7 +29,7 @@ public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<Rec
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new VaccineTypeListRecyclerViewAdapter.VaccineTypeViewHolder(FragmentVaccineTypeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new VaccineTypeViewHolder(FragmentVaccineTypeBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         return vaccineTypeList.size();
     }
 
-    public class VaccineTypeViewHolder extends RecyclerView.ViewHolder {
+    public static class VaccineTypeViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView vaccineTypeNameTextView, vaccineTypeDescriptionTextView;
 
@@ -56,7 +56,7 @@ public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         }
 
         private String fixNull(String str) {
-            return str == null || (str != null && "null".equals(str)) ? "" : str;
+            return str == null || "null".equals(str) ? "" : str;
         }
 
         public void bind(final VaccineType vaccineType) {
@@ -64,7 +64,7 @@ public class VaccineTypeListRecyclerViewAdapter extends RecyclerView.Adapter<Rec
             vaccineTypeNameTextView.setText(fixNull(title));
             vaccineTypeDescriptionTextView.setText(fixNull(description));
 
-            if (ADMIN.equals(CURRENT_LOGGEDIN_USERROLE)) {
+            if (ADMIN.equals(CURRENT_LOGIN_USERROLE)) {
                 cardView.setOnClickListener(e -> {
                     CURRENT_VACCINE_TYPE = vaccineType;
                     Navigation.findNavController(cardView).navigate(R.id.action_nav_vaccine_type_list_to_nav_maintain_vaccine_type);

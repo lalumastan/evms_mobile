@@ -1,11 +1,10 @@
 package sqltutorial.evmsmobile.data.model;
 
+import androidx.annotation.NonNull;
+
 public class VaccineType {
     private String name;
     private String description;
-
-    public VaccineType() {
-    }
 
     public VaccineType(String name, String description) {
         this.name = name;
@@ -28,6 +27,7 @@ public class VaccineType {
         this.description = description;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "VaccineType{" +
